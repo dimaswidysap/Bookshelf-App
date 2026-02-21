@@ -17,4 +17,32 @@
   max-width: 30rem;
   background-color: #355872;
   display: inline-flex;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.edit-form h2 {
+  font-weight: 900;
+  color: var(--font);
+}
+
+.edit-form div {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form div label {
+  color: var(--font);
+  font-weight: 800;
+}
+
+.edit-form div input {
+  height: 2rem;
+  width: 100%;
+  padding: 0.5rem;
 }

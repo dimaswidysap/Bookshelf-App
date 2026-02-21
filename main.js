@@ -1,5 +1,123 @@
 console.log("Hello, world!");
 
+function editBuku(buku) {
+  buku.forEach((items) => {
+    const existingForm = document.querySelector(".con-edit");
+    if (existingForm) {
+      existingForm.remove();
+    }
+
+    const container = document.createElement("section");
+    const form = document.createElement("form");
+    const h2 = document.createElement("h2");
+
+    container.classList.add("con-edit");
+    form.classList.add("edit-form");
+
+    document.body.appendChild(container);
+    container.appendChild(form);
+    form.appendChild(h2);
+
+    h2.textContent = "Edit Buku";
+    form.setAttribute("data-testid", "editForm");
+
+    const divEditBukuJudul = document.createElement("div");
+    const labelTitle = document.createElement("label");
+    labelTitle.setAttribute("for", "bookFormEdit");
+    const inputTitle = document.createElement("input");
+    inputTitle.setAttribute("id", "bookFormEdit");
+    inputTitle.setAttribute("data-testid", "bookFormEditInput");
+    inputTitle.setAttribute("value", `${items.title}`);
+    inputTitle.required = true;
+
+    form.appendChild(divEditBukuJudul);
+    divEditBukuJudul.appendChild(labelTitle);
+    divEditBukuJudul.appendChild(inputTitle);
+    labelTitle.textContent = "Edit Judul?";
+
+    const divEditBukuAuthor = document.createElement("div");
+    const labelTitleAuthor = document.createElement("label");
+    labelTitleAuthor.setAttribute("for", "bookFormEditAuthor");
+    const inputAuthor = document.createElement("input");
+    inputAuthor.setAttribute("id", "bookFormEditAuthor");
+    inputAuthor.setAttribute("data-testid", "bookFormEditInputAuthor");
+    inputAuthor.setAttribute("value", `${items.author}`);
+    inputAuthor.required = true;
+
+    form.appendChild(divEditBukuAuthor);
+    divEditBukuAuthor.appendChild(labelTitleAuthor);
+    divEditBukuAuthor.appendChild(inputAuthor);
+    labelTitleAuthor.textContent = "Edit Penulis?";
+
+    const divEditBukuYear = document.createElement("div");
+    const labelTitleYear = document.createElement("label");
+    labelTitleYear.setAttribute("for", "bookFormEditYear");
+    const inputYear = document.createElement("input");
+    inputYear.setAttribute("id", "bookFormEditYear");
+    inputYear.setAttribute("data-testid", "bookFormEditInputYear");
+    inputYear.setAttribute("value", `${items.year}`);
+    inputYear.setAttribute("type", "number");
+    inputYear.required = true;
+
+    form.appendChild(divEditBukuYear);
+    divEditBukuYear.appendChild(labelTitleYear);
+    divEditBukuYear.appendChild(inputYear);
+    labelTitleYear.textContent = "Edit Tahun?";
+
+    const buttonSimpan = document.createElement("button");
+    Object.assign(buttonSimpan.style, {
+      width: "50%",
+    });
+    form.appendChild(buttonSimpan);
+    buttonSimpan.classList.add("button-86");
+    buttonSimpan.textContent = "Simpan";
+    buttonSimpan.setAttribute("data-testid", "bookFormEditSubmitButton");
+
+    const buttonBatal = document.createElement("button");
+    Object.assign(buttonBatal.style, {
+      width: "50%",
+    });
+    form.appendChild(buttonBatal);
+    buttonBatal.classList.add("button-86");
+    buttonBatal.textContent = "Batal";
+    buttonBatal.setAttribute("data-testid", "bookFormEditCancelButton");
+
+    buttonBatal.addEventListener("click", (event) => {
+      event.preventDefault();
+      container.remove();
+    });
+
+    form.addEventListener("submit", (eventEdit) => {
+      eventEdit.preventDefault();
+
+      const newTitle = inputTitle.value;
+      const newAuthor = inputAuthor.value;
+      const newYear = Number(inputYear.value);
+
+      const bookIndex = books.findIndex((book) => book.id === items.id);
+
+      if (bookIndex !== -1) {
+        books[bookIndex] = {
+          ...books[bookIndex],
+          title: newTitle,
+          author: newAuthor,
+          year: newYear,
+        };
+
+        localStorage.setItem("books", JSON.stringify(books));
+
+        container.remove();
+
+        conUnread.innerHTML = "";
+        conRead.innerHTML = "";
+        displayBooks(books);
+
+        console.log("Buku berhasil diedit!");
+      }
+    });
+  });
+}
+
 function displayBooks(bookList) {
   bookList.forEach((items) => {
     const container = document.createElement("div");
@@ -71,18 +189,16 @@ function displayBooks(bookList) {
       conRead.innerHTML = "";
       displayBooks(books);
     });
+
+    btnEdit.addEventListener("click", function () {
+      const bookId = items.id;
+      const bukuDiedit = books.filter((items) => {
+        return items.id === bookId;
+      });
+      console.log(bukuDiedit);
+      editBuku(bukuDiedit);
+    });
   });
-}
-
-function editBuku() {
-  const container = document.createElement("section");
-  const form = document.createElement("form");
-
-  container.classList.add("con-edit");
-  form.classList.add("edit-form");
-
-  document.body.appendChild(container);
-  container.appendChild(form);
 }
 
 // editBuku();
