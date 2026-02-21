@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.displayNone {
+  display: none !important;
+}
+
+:root {
+  --font: rgb(227, 247, 255);
+}
+
+.hjuijh {
+  margin: 0 0 0 0.4rem;
+}
+
+body {
+  background-color: #355872;
+}
+
+input {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+header {
+  margin: 0 0 3rem 0;
+}
+header h1 {
+  font-weight: 900;
+  color: var(--font);
+  color: #072a50;
+  padding: 0.5rem 0 0 1rem;
+  text-shadow: 3px 3px 1px black;
+}
+.teks-pertegas {
+  text-shadow: 3px 3px 1px black;
+}
+
+main {
+  width: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+main section {
+  /* background-color: aqua; */
+  width: 90%;
+  max-width: 30rem;
+  margin: auto;
+}
+.batas {
+  height: 3rem;
+  width: 100%;
+  /* background-color: aqua; */
+  margin: 1rem 0 1rem 0;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+}
+.batas span {
+  display: inline-flex;
+  width: 100%;
+  height: 0.1rem;
+  background-color: #7aaace;
+}
+
+main section h2 {
+  color: var(--font);
+  font-weight: 900;
+}
+
+main section div {
+  display: flex;
+  flex-direction: column;
+}
+main section div label {
+  font-weight: 900;
+  color: var(--font);
+}
+main section div {
+  margin: 0 0 0.5rem 0;
+}
+main section div input {
+  height: 2rem;
+  padding: 0 1rem 0 1rem;
+}
+.inputCheckbox {
+  flex-direction: row-reverse;
+  justify-items: start;
+  align-items: center;
+  width: max-content;
+}
+
+.cariBuku form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.tambahBuku {
+  display: flex;
+  flex-direction: column;
+}
+
+.cariBuku form label {
+  font-weight: 900;
+  color: var(--font);
+  font-size: 2rem;
+}
+.cariBuku form input {
+  height: 3rem;
+  flex: 1;
+  padding: 0 0.5rem 0 0.5rem;
+}
