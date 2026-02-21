@@ -121,3 +121,14 @@ main section div input {
   flex: 1;
   padding: 0 0.5rem 0 0.5rem;
 }
+
+.buku-selesai-dibaca h2,
+.buku-belum-dibaca h2 {
+  margin: 0 0 2rem 0;
+}
+
+#incompleteBookList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
