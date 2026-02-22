@@ -1,4 +1,13 @@
-console.log("Hello, world!");
+const conUnread = document.getElementById("incompleteBookList");
+const conRead = document.getElementById("completeBookList");
+const formCari = document.getElementById("searchBook");
+const bookCheck = document.getElementById("bookFormIsComplete");
+const inputCari = document.getElementById("searchBookTitle");
+const btnCari = document.getElementById("searchSubmit");
+const content = document.querySelector(".hjuijh");
+const bookForm = document.getElementById("bookForm");
+
+let books = JSON.parse(localStorage.getItem("books")) || [];
 
 function editBuku(buku) {
   buku.forEach((items) => {
@@ -105,20 +114,17 @@ function editBuku(buku) {
         };
 
         localStorage.setItem("books", JSON.stringify(books));
-
         container.remove();
-
-        conUnread.innerHTML = "";
-        conRead.innerHTML = "";
         displayBooks(books);
-
-        console.log("Buku berhasil diedit!");
       }
     });
   });
 }
 
 function displayBooks(bookList) {
+  conUnread.innerHTML = "";
+  conRead.innerHTML = "";
+
   bookList.forEach((items) => {
     const container = document.createElement("div");
     const h3 = document.createElement("h3");
@@ -130,8 +136,24 @@ function displayBooks(bookList) {
 
     if (items.isComplete === true) {
       conRead.appendChild(container);
+
+      const btnBelumSelesai = document.createElement("button");
+      conButton.appendChild(btnBelumSelesai);
+      btnBelumSelesai.textContent = "Belum selesai dibaca";
+      btnBelumSelesai.setAttribute("data-testid", "bookItemIsCompleteButton");
+
+      btnBelumSelesai.addEventListener("click", () => {
+        const bookId = items.id;
+        const bookIndex = books.findIndex((b) => b.id === bookId);
+        if (bookIndex !== -1) {
+          books[bookIndex].isComplete = false;
+          localStorage.setItem("books", JSON.stringify(books));
+          displayBooks(books);
+        }
+      });
     } else {
       conUnread.appendChild(container);
+
       const btnSudahDibaca = document.createElement("button");
       conButton.appendChild(btnSudahDibaca);
       btnSudahDibaca.textContent = "Selesai dibaca";
@@ -143,8 +165,6 @@ function displayBooks(bookList) {
         if (bookIndex !== -1) {
           books[bookIndex].isComplete = true;
           localStorage.setItem("books", JSON.stringify(books));
-          conUnread.innerHTML = "";
-          conRead.innerHTML = "";
           displayBooks(books);
         }
       });
@@ -180,13 +200,8 @@ function displayBooks(bookList) {
 
     btnHapus.addEventListener("click", () => {
       const idBuku = items.id;
-
       books = books.filter((book) => book.id !== idBuku);
-
       localStorage.setItem("books", JSON.stringify(books));
-
-      conUnread.innerHTML = "";
-      conRead.innerHTML = "";
       displayBooks(books);
     });
 
@@ -195,22 +210,10 @@ function displayBooks(bookList) {
       const bukuDiedit = books.filter((items) => {
         return items.id === bookId;
       });
-      console.log(bukuDiedit);
       editBuku(bukuDiedit);
     });
   });
 }
-
-// editBuku();
-
-let books = JSON.parse(localStorage.getItem("books")) || [];
-const formCari = document.getElementById("searchBook");
-const bookCheck = document.getElementById("bookFormIsComplete");
-const conUnread = document.getElementById("incompleteBookList");
-const conRead = document.getElementById("completeBookList");
-const inputCari = document.getElementById("searchBookTitle");
-const btnCari = document.getElementById("searchSubmit");
-const content = document.querySelector(".hjuijh");
 
 bookCheck.addEventListener("change", (event) => {
   if (event.target.checked) {
@@ -220,7 +223,6 @@ bookCheck.addEventListener("change", (event) => {
   }
 });
 
-const bookForm = document.getElementById("bookForm");
 bookForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -238,15 +240,11 @@ bookForm.addEventListener("submit", function (event) {
   };
 
   books.push(bookData);
-
   localStorage.setItem("books", JSON.stringify(books));
 
-  conUnread.innerHTML = "";
-  conRead.innerHTML = "";
   displayBooks(books);
-
-  // bookForm.reset();
-  location.reload();
+  bookForm.reset();
+  content.classList.remove("displayNone");
 });
 
 btnCari.addEventListener("click", (event) => {
@@ -254,8 +252,6 @@ btnCari.addEventListener("click", (event) => {
   const cariBuku = inputCari.value.trim();
 
   if (cariBuku === "") {
-    conUnread.innerHTML = "";
-    conRead.innerHTML = "";
     displayBooks(books);
     return;
   }
@@ -265,11 +261,9 @@ btnCari.addEventListener("click", (event) => {
     return items.title.toLowerCase().includes(cariBukuLower);
   });
 
-  conUnread.innerHTML = "";
-  conRead.innerHTML = "";
   displayBooks(tampilkan);
-
   formCari.reset();
+  content.classList.remove("displayNone");
 });
 
 displayBooks(books);
